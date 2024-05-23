@@ -1,6 +1,6 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:beta_alarm_map_app/homeapp.dart';
 import 'package:beta_alarm_map_app/main.dart';
+import 'package:beta_alarm_map_app/vietmaptest.dart';
 import 'package:flutter/material.dart';
 
  class NotificationService{
@@ -38,7 +38,6 @@ import 'package:flutter/material.dart';
     debug: true
   );
 
-
  
   await AwesomeNotifications().setListeners(
     onActionReceivedMethod: onActionReceivedMethod,
@@ -61,13 +60,11 @@ import 'package:flutter/material.dart';
   static Future<void> onActionReceivedMethod(
     ReceivedAction receivedAction) async {
       debugPrint('onNotificationCreatedMethod');
-      final payLoad = receivedAction.payload ?? {
-      
-      };
-      if(payLoad['navigate'] == 'true'){
+      final payLoad = receivedAction.payload ?? {};
+      if(payLoad["navigate"] == "true"){
         MyApp.navigatorKey.currentState?.push(
           MaterialPageRoute(
-            builder: (_) => const HomeApp()
+            builder: (_) => const VietMapTesting()
           )
         );
       }
