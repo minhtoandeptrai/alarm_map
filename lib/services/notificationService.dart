@@ -1,11 +1,10 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:beta_alarm_map_app/Screens/trackingScreen.dart';
 import 'package:beta_alarm_map_app/main.dart';
-import 'package:beta_alarm_map_app/vietmaptest.dart';
 import 'package:flutter/material.dart';
 
  class NotificationService{
   static Future<void> initializeNotification() async {
-
      await AwesomeNotifications().isNotificationAllowed().then(
       (isAllowed) async {
         if(!isAllowed) {
@@ -13,7 +12,6 @@ import 'package:flutter/material.dart';
       }
       }
     );
-
     await AwesomeNotifications().initialize(
     null,
     [
@@ -24,9 +22,10 @@ import 'package:flutter/material.dart';
         channelDescription: 'Notifications channel for basic tests',
         defaultColor: Colors.purple,
         ledColor: Colors.white,
-        importance: NotificationImportance.Max,
+        importance: NotificationImportance.High,
         channelShowBadge: true,
-        onlyAlertOnce: true,
+        locked: true,
+        onlyAlertOnce: false,
         playSound: true,
         criticalAlerts: true)
     ],
@@ -37,8 +36,6 @@ import 'package:flutter/material.dart';
     ],
     debug: true
   );
-
- 
   await AwesomeNotifications().setListeners(
     onActionReceivedMethod: onActionReceivedMethod,
     onNotificationCreatedMethod: onNotificationCreatedMethod,
@@ -64,7 +61,7 @@ import 'package:flutter/material.dart';
       if(payLoad["navigate"] == "true"){
         MyApp.navigatorKey.currentState?.push(
           MaterialPageRoute(
-            builder: (_) => const VietMapTesting()
+            builder: (_) => TrackingScreen()
           )
         );
       }
@@ -73,7 +70,6 @@ import 'package:flutter/material.dart';
   static Future<void> onDismissActionReceivedMethod(
     ReceivedAction receivedNotification) async {
       debugPrint('onNotificationCreatedMethod');}
-    
   static Future<void> showNotification({
     required final String title,
     required final String body,
@@ -89,7 +85,7 @@ import 'package:flutter/material.dart';
   }) async{
     await AwesomeNotifications().createNotification(
       content: NotificationContent(
-        id: -1, 
+        id: 1, 
         channelKey: 'basic_channel',
         title: title,
         body: body,
@@ -97,6 +93,7 @@ import 'package:flutter/material.dart';
         notificationLayout: notificationLayout,
         summary: summary,
         category: category,
+        customSound: 'resource://raw/alarm',
         payload: payload,
         bigPicture: bigPicture),
       actionButtons: actionButtons,

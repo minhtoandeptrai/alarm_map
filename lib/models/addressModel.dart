@@ -1,8 +1,8 @@
-import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
+import 'package:vietmap_flutter_gl/vietmap_flutter_gl.dart';
 class AutoCompleteAddress{
   late String address;
   late String distance;
-  GeoPoint point;
+  LatLng point;
   AutoCompleteAddress({
     required this.address,
     required this.distance,
