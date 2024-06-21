@@ -1,3 +1,6 @@
+
+import 'dart:convert';
+
 import 'package:beta_alarm_map_app/models/alramModel.dart';
 import 'package:beta_alarm_map_app/models/searchBar.dart';
 import 'package:beta_alarm_map_app/services/providers.dart';
@@ -5,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart' as https;
 class BottomSlidingPanel extends StatefulWidget {
   BottomSlidingPanel({super.key});
   @override
@@ -14,6 +18,8 @@ class BottomSlidingPanel extends StatefulWidget {
 class _BottomSlidingPanelState extends State<BottomSlidingPanel> {
   var panelController = PanelController();
   var textController = TextEditingController();
+  
+  get http => null;
   @override
   Widget build(BuildContext context) {
     return Consumer<GeneralInfo>(
@@ -58,8 +64,15 @@ class _BottomSlidingPanelState extends State<BottomSlidingPanel> {
             itemBuilder: (context, index){
               var item = GeneralInfo.addressList[index];
               return ListTile(
-                onTap: (){
-                  AlarmModel model = AlarmModel(item);
+                onTap: () async {
+                  final uri = Uri.parse('https://api.openweathermap.org/data/2.5/weather?lat=${item.point.latitude}&lon=${item.point.longitude}&appid=273a0cfe5dce7ec5545298bf04b7418e&lang=vi&units=metric&fbclid=IwZXh0bgNhZW0CMTAAAR2cA_BqEh9jxdW7N2NUQsAsYPfoMo-HzeuQmZ8DVlc1Z2pYTvVElr9kBbs_aem_ZmFrZWR1bW15MTZieXRlcw');
+                  final response = await https.get(uri);
+                  var jsonData = jsonDecode(response.body);
+                  String weather = ' ';
+                  weather += jsonData['weather'][0]['description'];
+                  weather += ' ';
+                  weather += jsonData['main']['temp'].toString();
+                  AlarmModel model = AlarmModel(item, weather);
                   Provider.of<TmpDestinationMode>(context, listen: false).setModel(model);
                   Navigator.pushNamed(context, '/confirm');
                 },

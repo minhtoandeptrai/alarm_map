@@ -14,6 +14,7 @@ const List<int> distanceList = <int>[
   700,
   800,
   900,
+  1000,
   1100,
   1200,
   1300,
@@ -110,62 +111,83 @@ class _CupertinoPickerExampleState extends State<CupertinoPickerExample> {
                   ),)
               ],
             ),
-            const SizedBox(height: 20),
-            const Text('Chọn khoảng cách tối thiểu báo thức',
-            style: TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.w500
-              )),
-            SizedBox(height: 10),
-            DefaultTextStyle(
-          style: TextStyle(
-            color: CupertinoColors.label.resolveFrom(context),
-            fontSize: 22,
-          ),
-          child: Center(
-            child: Row(
-              children: <Widget>[
-                
-                CupertinoButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: () => _showDialog(
-                    CupertinoPicker(
-                      magnification: 1.22,
-                      squeeze: 1.2,
-                      useMagnifier: true,
-                      itemExtent: _kItemExtent,
-                      scrollController: FixedExtentScrollController(
-                        initialItem: distanceItem,
-                      ),
-                      onSelectedItemChanged: (int selectedItem) {
-                        setState(() {
-                          distanceItem = selectedItem;
-                        });
-                      },
-                      children:
-                          List<Widget>.generate(distanceList.length, (int index) {
-                        return Center(child: Text(distanceList[index].toString()));
-                      }),
-                    ),
-                  ),
-                  child: Text(
-
-                    '${distanceList[distanceItem].toString()} m',
-                    style: const TextStyle(
-                      fontSize: 22.0,
-                    ),
-                  ),
+            Row(
+              children: [
+                Container(
+                  width: 150,
+                  child: Text('Thời tiết: ', 
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500
+                    )),
                 ),
-                 Text(' m',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
+                Row(
+                  children: [
+                    Text('${model.weather}',
+                        style: TextStyle(
+                    fontSize: 19,
                     color: Colors.grey[900]
-                  ),),
+                  )),
+                  Text(' o', style: TextStyle(fontSize: 12, color: Colors.grey[800])),
+                  Text('C', style: TextStyle(fontSize: 19, color: Colors.grey[900])),
+                  ],
+                )
               ],
             ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                const Text('Khoảng cách tối thiểu báo thức: ',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500
+                    )),
+            SizedBox(width: 5),
+            DefaultTextStyle(
+            style: TextStyle(
+            color: Colors.orange[500],
+            fontSize: 22,
+            ),
+            child: Center(
+              child: Row(
+                children: <Widget>[
+                  CupertinoButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () => _showDialog(
+                      CupertinoPicker(
+                        magnification: 1.22,
+                        squeeze: 1.2,
+                        useMagnifier: true,
+                        itemExtent: _kItemExtent,
+                        scrollController: FixedExtentScrollController(
+                          initialItem: distanceItem,
+                        ),
+                        onSelectedItemChanged: (int selectedItem) {
+                          setState(() {
+                            distanceItem = selectedItem;
+                          });
+                        },
+                        children:
+                            List<Widget>.generate(distanceList.length, (int index) {
+                          return Center(child: Text(distanceList[index].toString()));
+                        }),
+                      ),
+                    ),
+                    child: Text(
+                      '${distanceList[distanceItem].toString()} m',
+                      style: TextStyle(
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.orange[400]
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
-        ),
+                ],
+              ),
           SizedBox(height: 20,),
             Row(
               children: [
@@ -182,7 +204,7 @@ class _CupertinoPickerExampleState extends State<CupertinoPickerExample> {
                       'Xác nhận',
                       style: TextStyle(
                         fontSize: 22,
-                        fontWeight: FontWeight.w400,
+                        fontWeight: FontWeight.w500,
                         color: Colors.white
                       )),
                   ),

@@ -59,14 +59,13 @@ Future<void> ShowNotification() async {
           onlyAlertOnce: false,
           visibility: NotificationVisibility.public,
           playSound: true,
-          sound: RawResourceAndroidNotificationSound('alarm')
       );
   const NotificationDetails notificationDetails =
       NotificationDetails(android: androidNotificationDetails);
   await _flutterLocalNotificationsPlugin.show(
       0, 
-      'plain title', 
-      'plain body', 
+      'Báo thức', 
+      'Bạn đã đến nơi', 
       notificationDetails,
       payload: 'item x'
   );}

@@ -6,6 +6,7 @@ import 'package:beta_alarm_map_app/services/local_notification.dart';
 import 'package:beta_alarm_map_app/services/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'package:vietmap_flutter_gl/vietmap_flutter_gl.dart';
@@ -22,6 +23,7 @@ class _TrackingState extends State<TrackingScreen> with WidgetsBindingObserver{
   String apiKey = '1c03f84d35eeabbf622cb486ba616b713aef60f0c46d1543';
   LatLng? _currentP;
   String? s;
+  double distance = 0;
   bool isRunning = false;
   //function
   Future<void> _cameraToPosition(LatLng pos) async{
@@ -55,6 +57,12 @@ class _TrackingState extends State<TrackingScreen> with WidgetsBindingObserver{
             currentLocation.longitude != null){
               setState(() {
                 LatLng tmpLatLng = LatLng(currentLocation.latitude!, currentLocation.longitude!);
+                LatLng? des = Provider.of<DestinationModel>(context, listen: false).getLatLng();
+
+                 distance = Geolocator.distanceBetween(
+                    tmpLatLng.latitude, tmpLatLng.longitude, 
+                    des!.latitude, des.longitude);
+                
                 _currentP = tmpLatLng;
                 _cameraToPosition(_currentP!);
               });
@@ -83,7 +91,7 @@ class _TrackingState extends State<TrackingScreen> with WidgetsBindingObserver{
   @override
   Widget build(BuildContext context) {
   LatLng? des = Provider.of<DestinationModel>(context, listen: false).getLatLng();
-  int? distance = Provider.of<DestinationModel>(context, listen: false).getDistance();
+  int? minDistance = Provider.of<DestinationModel>(context, listen: false).getDistance();
     return Stack(
       children: [
         //map
@@ -107,9 +115,10 @@ class _TrackingState extends State<TrackingScreen> with WidgetsBindingObserver{
           padding: const EdgeInsets.symmetric(vertical: 40.0),
           child: Center(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.max,
               children: [
+                DistanceLeftBar(distace: distance),
                 Container(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
@@ -134,7 +143,10 @@ class _TrackingState extends State<TrackingScreen> with WidgetsBindingObserver{
                     onPressed: () {
                       setState(() {
                         isRunning = true;
-                        FlutterBackgroundService().invoke('sendData',{'latitude' : des!.latitude, 'longitude' : des.longitude, 'distance' : distance});
+                        int second = 4;
+                        minDistance! > 5000 ? second = 10 : 4;
+                        FlutterBackgroundService().invoke('sendData', {'latitude' : des!.latitude,
+                              'longitude' : des.longitude, 'distance' : minDistance, 'second' : second});
                       });
                   }) )
               ],

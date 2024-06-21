@@ -1,6 +1,5 @@
 import 'package:beta_alarm_map_app/Screens/mainScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_background_service/flutter_background_service.dart';
 
 class CancelSreen extends StatefulWidget {
   const CancelSreen({super.key});

@@ -40,7 +40,8 @@ Future<void> initializeService() async {
          });
       });
       service.on('sendData').listen((event) {
-        Timer.periodic(const Duration(seconds: 7), (timer) async{
+        Timer.periodic(Duration(seconds: event?['second']), (timer) async{
+          print(event?['distance']);
           privateTimer = timer;
           if(await service.isForegroundService()){
             LatLng p = LatLng(event?['latitude'], event?['longitude']);
@@ -53,7 +54,7 @@ Future<void> initializeService() async {
             {
               privateTimer.cancel();
               ShowNotification();
-              Timer.periodic(Duration(seconds: 6), (timer) { 
+              Timer.periodic(Duration(seconds: 4), (timer) { 
                 privateTimer = timer;
                 ShowNotification();
               });

@@ -2,7 +2,6 @@ import 'package:beta_alarm_map_app/Screens/cancelScreen.dart';
 import 'package:beta_alarm_map_app/Screens/mainScreen.dart';
 import 'package:beta_alarm_map_app/Screens/confirmScreen.dart';
 import 'package:beta_alarm_map_app/Screens/trackingScreen.dart';
-import 'package:beta_alarm_map_app/services/local_notification.dart';
 import 'package:beta_alarm_map_app/services/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
