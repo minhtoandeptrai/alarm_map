@@ -5,10 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 const double _kItemExtent = 32.0;
 const List<int> distanceList = <int>[
-  100,
-  200,
-  300,
-  400,
   500,
   600,
   700,
@@ -135,59 +131,55 @@ class _CupertinoPickerExampleState extends State<CupertinoPickerExample> {
               ],
             ),
             const SizedBox(height: 20),
-            Row(
-              children: [
-                const Text('Khoảng cách tối thiểu báo thức: ',
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500
-                    )),
-            SizedBox(width: 5),
-            DefaultTextStyle(
-            style: TextStyle(
-            color: Colors.orange[500],
-            fontSize: 22,
-            ),
-            child: Center(
-              child: Row(
-                children: <Widget>[
-                  CupertinoButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: () => _showDialog(
-                      CupertinoPicker(
-                        magnification: 1.22,
-                        squeeze: 1.2,
-                        useMagnifier: true,
-                        itemExtent: _kItemExtent,
-                        scrollController: FixedExtentScrollController(
-                          initialItem: distanceItem,
+            const Text('Khoảng cách tối thiểu báo thức: ',
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500
+                )),
+                        SizedBox(width: 5),
+                        DefaultTextStyle(
+                        style: TextStyle(
+                        color: Colors.orange[500],
+                        fontSize: 22,
                         ),
-                        onSelectedItemChanged: (int selectedItem) {
-                          setState(() {
-                            distanceItem = selectedItem;
-                          });
-                        },
-                        children:
-                            List<Widget>.generate(distanceList.length, (int index) {
-                          return Center(child: Text(distanceList[index].toString()));
-                        }),
-                      ),
+                        child: Center(
+                          child: Row(
+            children: <Widget>[
+              CupertinoButton(
+                padding: EdgeInsets.zero,
+                onPressed: () => _showDialog(
+                  CupertinoPicker(
+                    magnification: 1.22,
+                    squeeze: 1.2,
+                    useMagnifier: true,
+                    itemExtent: _kItemExtent,
+                    scrollController: FixedExtentScrollController(
+                      initialItem: distanceItem,
                     ),
-                    child: Text(
-                      '${distanceList[distanceItem].toString()} m',
-                      style: TextStyle(
-                        fontSize: 22.0,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.orange[400]
-                      ),
-                    ),
+                    onSelectedItemChanged: (int selectedItem) {
+                      setState(() {
+                        distanceItem = selectedItem;
+                      });
+                    },
+                    children:
+                        List<Widget>.generate(distanceList.length, (int index) {
+                      return Center(child: Text(distanceList[index].toString()));
+                    }),
                   ),
-                ],
+                ),
+                child: Text(
+                  '${distanceList[distanceItem].toString()} m',
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.orange[400]
+                  ),
+                ),
               ),
-            ),
-          ),
-                ],
-              ),
+            ],
+                          ),
+                        ),
+                      ),
           SizedBox(height: 20,),
             Row(
               children: [
@@ -200,7 +192,7 @@ class _CupertinoPickerExampleState extends State<CupertinoPickerExample> {
                       Provider.of<DestinationModel>(context, listen: false).setModel(model, distanceList[distanceItem]);
                       Navigator.pushNamed(context, '/tracking');
                     },
-                    child: Text(
+                    child: const Text(
                       'Xác nhận',
                       style: TextStyle(
                         fontSize: 22,

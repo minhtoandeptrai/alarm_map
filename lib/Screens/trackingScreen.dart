@@ -72,8 +72,8 @@ class _TrackingState extends State<TrackingScreen> with WidgetsBindingObserver{
   @override
   void initState(){
     super.initState();
-    initializeService();
-    initializeNotification(context);
+    initializeService();   // khoi tao background service
+    initializeNotification(context); // khoi tao thong bao
     getLocationUpdate();
     WidgetsBinding.instance.addObserver(this);
   }
@@ -130,11 +130,11 @@ class _TrackingState extends State<TrackingScreen> with WidgetsBindingObserver{
                     color: Colors.red[400], 
                     iconSize: 35, 
                     onPressed: () {
-                      dispose();
-                       Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => Scaffold(body: MainScreen())),
-                        (Route<dynamic> route) => false, 
+                        dispose();
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => Scaffold(body: MainScreen())),
+                          (Route<dynamic> route) => false, 
                       );
                     }) : IconButton(
                     icon: const Icon(Icons.play_arrow),

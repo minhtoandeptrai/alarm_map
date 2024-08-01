@@ -8,7 +8,6 @@ class DistanceLeftBar extends StatefulWidget {
   @override
   State<DistanceLeftBar> createState() => _DistanceLeftBarState();
 }
-
 class _DistanceLeftBarState extends State<DistanceLeftBar> {
   @override
   Widget build(BuildContext context) {
